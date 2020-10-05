@@ -27,7 +27,6 @@ public class GeradorDeRelatorios {
 		this.criterio = criterio;
 		this.format_flags = format_flags;
 		this.filtro = filtro;
-		// this.argFiltro = argFiltro;
 	}
 
 	private void ordena(int i, int j){
@@ -53,7 +52,7 @@ public class GeradorDeRelatorios {
 
 			Produto produto = produtos[i];
 			boolean selecionado = false;
-			selecionado = filtro.selecionado(produto.getQtdEstoque(), argFiltro, produto.getCategoria(), produto.getPreco(), produto.getDescricao());
+			selecionado = filtro.selecionado(produto);
 
 			// Implementação do Decorator
 			if(selecionado){
@@ -153,7 +152,7 @@ public class GeradorDeRelatorios {
 
 		gdr = new GeradorDeRelatorios(produtos, new quickSort(), new CRIT_DESC_CRESC(), 
 		FORMATO_PADRAO, 
-						new FILTRO_PRECO_ENTRE_O_INTERVALO("0,100"));
+						new FILTRO_CONTEM_SUBSTRING("Programming"));
 
 		try{
 			gdr.geraRelatorio("saida.html");

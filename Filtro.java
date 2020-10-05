@@ -1,11 +1,14 @@
 public interface Filtro {
 
-    public boolean selecionado(int getQtdEstoque, Object argFiltro, String getCategoria, double preco, String descricao);
+    public boolean selecionado(Produto produto);
 }
+
+// produto.getQtdEstoque(), produto.getCategoria(), produto.getPreco(), produto.getDescricao()
+
 
 class FILTRO_TODOS implements Filtro {
 
-    public boolean selecionado(int getQtdEstoque, Object argFiltro, String getCategoria, double preco, String descricao) { 
+    public boolean selecionado(Produto produto) { 
        
         return true;
     }
@@ -20,8 +23,8 @@ class FILTRO_ESTOQUE_MENOR_OU_IGUAL_A implements Filtro {
         this.estoque = estoque;
     }
 
-    public boolean selecionado(int getQtdEstoque, Object argFiltro, String getCategoria, double preco, String descricao) { 
-        return (getQtdEstoque <= this.estoque);
+    public boolean selecionado(Produto produto) { 
+        return (produto.getQtdEstoque() <= this.estoque);
     }
 }
 
@@ -34,8 +37,8 @@ class FILTRO_CATEGORIA_IGUAL_A implements Filtro {
         this.categoria = categoria;
     }
 
-    public boolean selecionado(int getQtdEstoque, Object argFiltro, String getCategoria, double preco, String descricao) { 
-        return getCategoria.equalsIgnoreCase(this.categoria);
+    public boolean selecionado(Produto produto) { 
+        return produto.getCategoria().equalsIgnoreCase(this.categoria);
     }
 }
 
@@ -48,13 +51,13 @@ class FILTRO_PRECO_ENTRE_O_INTERVALO implements Filtro {
         this.intervaloInserido = intervaloInserido;
     }
 
-    public boolean selecionado(int getQtdEstoque, Object argFiltro, String getCategoria, double preco, String descricao) { 
+    public boolean selecionado(Produto produto) { 
         
 		String[] valores = this.intervaloInserido.split(",");
 		int menorValor = Integer.parseInt(valores[0]);
 		int maiorValor = Integer.parseInt(valores[1]);
 
-        return (preco >= menorValor && preco <= maiorValor);
+        return (produto.getPreco() >= menorValor && produto.getPreco() <= maiorValor);
     }
 }
 
@@ -67,8 +70,8 @@ class FILTRO_CONTEM_SUBSTRING implements Filtro {
         this.subString = subString;
     }
 
-    public boolean selecionado(int getQtdEstoque, Object argFiltro, String getCategoria, double preco, String descricao) {
+    public boolean selecionado(Produto produto) {
         
-        return descricao.contains(this.subString);
+        return produto.getDescricao().contains(this.subString);
     }
 }
