@@ -137,27 +137,25 @@ public class GeradorDeRelatorios {
 
 		GeradorDeRelatorios gdr;
 
-		//FORMATO_PADRAO | FORMATO_NEGRITO |  FORMATO_ITALICO
-		//new FILTRO_CONTEM_SUBSTRING()
-		/*produtos, new quickSort(), new CRIT_DESC_CRESC(), 
-		FORMATO_PADRAO, 
-						new FILTRO_TODOS(), "Carregador"*/
-
-						produtos[21] = new Negrito(produtos[21]);
-						produtos[15] = new Italico(new Negrito(produtos[15]));
-						produtos[12] = new Negrito(new Cor(produtos[12],"green"));
-						produtos[25] = new Italico(new Cor(produtos[25],"red"));
-						produtos[3] = new Italico(produtos[3]);
+		// aplicação de formatações
+		produtos[21] = new Negrito(produtos[21]);
+		produtos[15] = new Italico(new Negrito(produtos[15]));
+		produtos[12] = new Negrito(new Cor(produtos[12],"green"));
+		produtos[25] = new Italico(new Cor(produtos[25],"red"));
+		produtos[3] = new Italico(produtos[3]);
 
 
-		gdr = new GeradorDeRelatorios(produtos, new quickSort(), new CRIT_DESC_CRESC(), 
-		FORMATO_PADRAO, 
-						new FILTRO_CONTEM_SUBSTRING("Programming"));
+		// instanciação do gerador de relatórios
+		gdr = new GeradorDeRelatorios(	produtos,										// arranjo de produtos
+										new quickSort(),								// algoritmo de ordenação
+										new CRIT_DESC_CRESC(),							// critério de ordenação
+										FORMATO_PADRAO, 								// formatação
+										new FILTRO_CONTEM_SUBSTRING("Programming")	);	// filtros
 
 		try{
+			
 			gdr.geraRelatorio("saida.html");
-		}
-		catch(IOException e){
+		} catch(IOException e){
 			
 			e.printStackTrace();
 		}
