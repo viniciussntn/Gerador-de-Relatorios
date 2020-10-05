@@ -8,7 +8,7 @@ java GeradorDeRelatorios
 ```
 O algoritmo e critério de ordenação, o filtro e a formatação deve ser selecionada na instanciação do gerador de relatórios.
 
-_! Este README está em construção_
+_! Este README está em construção e o programa estão em construção._
 
 
 ### **Licença**
