@@ -14,7 +14,7 @@ public class GeradorDeRelatorios {
 	private Filtro filtro;
 	private Object argFiltro;
 
-	public GeradorDeRelatorios(Produto [] produtos, Algoritmo algoritmo, Criterio criterio, int format_flags, Filtro filtro, Object argFiltro){
+	public GeradorDeRelatorios(Produto [] produtos, Algoritmo algoritmo, Criterio criterio, int format_flags, Filtro filtro){
 
 		this.produtos = new Produto[produtos.length];
 
@@ -27,7 +27,7 @@ public class GeradorDeRelatorios {
 		this.criterio = criterio;
 		this.format_flags = format_flags;
 		this.filtro = filtro;
-		this.argFiltro = argFiltro;
+		// this.argFiltro = argFiltro;
 	}
 
 	private void ordena(int i, int j){
@@ -51,30 +51,30 @@ public class GeradorDeRelatorios {
 
 		for(int i = 0; i < produtos.length; i++){
 
-			Produto p = produtos[i];
+			Produto produto = produtos[i];
 			boolean selecionado = false;
-			selecionado = filtro.selecionado(p.getQtdEstoque(), argFiltro, p.getCategoria(), p.getPreco(), p.getDescricao());
+			selecionado = filtro.selecionado(produto.getQtdEstoque(), argFiltro, produto.getCategoria(), produto.getPreco(), produto.getDescricao());
 
 			// Implementação do Decorator
 			if(selecionado){
 				out.print("<li>");	
 
 				if(((format_flags & FORMATO_NEGRITO) > 0) && ((format_flags & FORMATO_ITALICO) > 0)){
-					Produto formatacaoBoth = new Italico(new Negrito(p));
+					Produto formatacaoBoth = new Italico(new Negrito(produto));
 					out.print(formatacaoBoth.formataParaImpressao());
 				}
 				else if((format_flags & FORMATO_NEGRITO) > 0){
-					Produto formatacaoNegrito = new Negrito(p);
+					Produto formatacaoNegrito = new Negrito(produto);
 					out.print(formatacaoNegrito.formataParaImpressao());
 				}
 
 				else if((format_flags & FORMATO_ITALICO) > 0){
-					Produto formatacaoItalico = new Italico(p);
+					Produto formatacaoItalico = new Italico(produto);
 					out.print(formatacaoItalico.formataParaImpressao());
 				}
 				
 				else {
-					out.print(p.formataParaImpressao());
+					out.print(produto.formataParaImpressao());
 				}
 				
 				out.println("</li>");
@@ -153,7 +153,7 @@ public class GeradorDeRelatorios {
 
 		gdr = new GeradorDeRelatorios(produtos, new quickSort(), new CRIT_DESC_CRESC(), 
 		FORMATO_PADRAO, 
-						new FILTRO_TODOS(), "Carregador");
+						new FILTRO_PRECO_ENTRE_O_INTERVALO("0,100"));
 
 		try{
 			gdr.geraRelatorio("saida.html");

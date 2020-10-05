@@ -1,30 +1,56 @@
 public interface Filtro {
+
     public boolean selecionado(int getQtdEstoque, Object argFiltro, String getCategoria, double preco, String descricao);
 }
 
 class FILTRO_TODOS implements Filtro {
+
     public boolean selecionado(int getQtdEstoque, Object argFiltro, String getCategoria, double preco, String descricao) { 
+       
         return true;
     }
 }
 
 class FILTRO_ESTOQUE_MENOR_OU_IGUAL_A implements Filtro {
+   
+    public int estoque;
+
+    public FILTRO_ESTOQUE_MENOR_OU_IGUAL_A(int estoque) {
+       
+        this.estoque = estoque;
+    }
+
     public boolean selecionado(int getQtdEstoque, Object argFiltro, String getCategoria, double preco, String descricao) { 
-        return (getQtdEstoque <= (Integer) argFiltro);
+        return (getQtdEstoque <= this.estoque);
     }
 }
 
 class FILTRO_CATEGORIA_IGUAL_A implements Filtro {
+ 
+    public String categoria;
+
+    public FILTRO_CATEGORIA_IGUAL_A(String categoria) {
+       
+        this.categoria = categoria;
+    }
+
     public boolean selecionado(int getQtdEstoque, Object argFiltro, String getCategoria, double preco, String descricao) { 
-        return (getCategoria.equalsIgnoreCase((String)argFiltro));
+        return getCategoria.equalsIgnoreCase(this.categoria);
     }
 }
 
 class FILTRO_PRECO_ENTRE_O_INTERVALO implements Filtro {
+
+    public String intervaloInserido;
+    
+    public FILTRO_PRECO_ENTRE_O_INTERVALO(String intervaloInserido) {
+        
+        this.intervaloInserido = intervaloInserido;
+    }
+
     public boolean selecionado(int getQtdEstoque, Object argFiltro, String getCategoria, double preco, String descricao) { 
         
-        String intervaloInserido = (String) argFiltro;
-		String[] valores = intervaloInserido.split(",");
+		String[] valores = this.intervaloInserido.split(",");
 		int menorValor = Integer.parseInt(valores[0]);
 		int maiorValor = Integer.parseInt(valores[1]);
 
@@ -33,9 +59,16 @@ class FILTRO_PRECO_ENTRE_O_INTERVALO implements Filtro {
 }
 
 class FILTRO_CONTEM_SUBSTRING implements Filtro {
-    public boolean selecionado(int getQtdEstoque, Object argFiltro, String getCategoria, double preco, String descricao) { 
+
+    public String subString;
+
+    public FILTRO_CONTEM_SUBSTRING(String subString) {
         
-        String subString = (String) argFiltro;
-        return descricao.contains(subString);
+        this.subString = subString;
+    }
+
+    public boolean selecionado(int getQtdEstoque, Object argFiltro, String getCategoria, double preco, String descricao) {
+        
+        return descricao.contains(this.subString);
     }
 }
